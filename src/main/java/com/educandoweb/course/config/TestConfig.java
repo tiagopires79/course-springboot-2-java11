@@ -24,7 +24,4 @@ import com.educandoweb.course.repositories.UserRepository;
 		
 		userRepository.saveAll(Arrays.asList(u1, u2));
 	}
-	
-	
-
 }
