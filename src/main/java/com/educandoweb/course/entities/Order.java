@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.educandoweb.course.entities.enums.OrderStatus;
@@ -30,13 +32,18 @@ public class Order implements Serializable {
 	private Instant moment;
 	
 	private Integer orderStatus;
-
+	//private Double orderPriceTotal;
+		
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
 	
 	@OneToMany(mappedBy = "id.order")
-	private Set<OrderItem> itens = new HashSet<>();
+	private Set<OrderItem> items = new HashSet<>();
+	
+	// Mapeamento "cascade" necessário devido ser relacionamento 1 para 1 e assim atribuir o mesmo id para ambos
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Payment payment;
 	
 	public Order() {
 	}
@@ -83,9 +90,34 @@ public class Order implements Serializable {
 		this.client = client;
 	}
 	
-	public Set<OrderItem> getItens(){
-		return itens;
-	}	
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	public Set<OrderItem> getItems(){
+		return items;
+	}
+	
+	public Double getTotal() {
+		double sum = 0.00;
+		for (OrderItem x : items) {
+			sum += x.getSubTotal();
+		}
+		return sum;
+	}
+	
+//	private void getPriceTotal() {
+//		for (OrderItem x : items) {
+//			setOrderPriceTotal(x.getSubTotal());
+//			//double total =+ x.getSubTotal();
+//			//return total;
+//		}
+//		//return orderPriceTotal; 
+//	}
 
 	@Override
 	public int hashCode() {
