@@ -1,6 +1,5 @@
 package com.educandoweb.course.entities;
 
-<<<<<<< HEAD
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -16,21 +15,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_payment")
-public class Payment implements Serializable{
+public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id	
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant moment;
-	
+
 	@JsonIgnore
 	@OneToOne
 	@MapsId // Mapeamento necessário devido a dependencia de "Payment" em relação a "Order"
-	        // Um "Payment" não pode existir sem que exista um "Order" associado. Já o contrário é permitido.
+			// Um "Payment" não pode existir sem que exista um "Order" associado. Já o
+			// contrário é permitido.
 	private Order order;
-	
-	public Payment() {		
+
+	public Payment() {
 	}
 
 	public Payment(Long id, Instant moment, Order order) {
@@ -88,8 +88,4 @@ public class Payment implements Serializable{
 			return false;
 		return true;
 	}
-=======
-public class Payment {
-
->>>>>>> cd0a62a8b30c7e2d20fbd94bf4f6d661e26bf95b
 }
