@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -87,4 +88,8 @@ public class Payment implements Serializable{
 			return false;
 		return true;
 	}
+=======
+public class Payment {
+
+>>>>>>> cd0a62a8b30c7e2d20fbd94bf4f6d661e26bf95b
 }
